@@ -48,9 +48,9 @@ Geist handles interface text and large timer numerals; Geist Mono is used for co
 
 ## Install on Windows
 
-No GitHub Release has been published yet. When a release is available, download the Windows installer from [GitHub Releases](https://github.com/dustin04x/FLOWSTATE/releases).
+Download the [Windows installer for FLOWSTATE 1.0.0](https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE.Setup.1.0.0.exe) from GitHub Releases.
 
-The Windows installer is currently unsigned. Windows may show a SmartScreen warning when it is opened.
+The installer is unsigned, so Windows may show a SmartScreen warning when it is opened.
 
 ## Keyboard shortcuts
 
