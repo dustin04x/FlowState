@@ -1,0 +1,41 @@
+# Dependencies and build output
+node_modules/
+dist/
+dist-electron/
+coverage/
+outputs/
+*.tsbuildinfo
+
+# Local work and caches
+work/
+.cache/
+.vite/
+*.log
+npm-debug.log*
+
+# Environment and credential files
+.env
+.env.*
+!.env.example
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+.netrc
+_netrc
+credentials.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor settings
+.idea/
+.vscode/
+
+# Local agent planning
+docs/superpowers/plans/
