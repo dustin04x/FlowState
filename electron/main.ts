@@ -79,7 +79,7 @@ function buildTrayMenu(): MenuItemConstructorOptions[] {
     })),
   }
   return [
-    { label: `FLOWSTATE · ${sessionName(trayState.kind)} · ${formatTrayTime(trayState.remainingSeconds)}`, enabled: false },
+    { label: `FlowState · ${sessionName(trayState.kind)} · ${formatTrayTime(trayState.remainingSeconds)}`, enabled: false },
     { label: goalLabel, enabled: false },
     { type: 'separator' },
     { label: timerLabel, click: () => sendTrayAction('toggle') },
@@ -87,9 +87,9 @@ function buildTrayMenu(): MenuItemConstructorOptions[] {
     { label: 'Reset timer', click: () => sendTrayAction('reset') },
     { label: 'Skip session', click: () => sendTrayAction('skip') },
     { type: 'separator' },
-    { label: mainWindow?.isVisible() ? 'Hide FLOWSTATE' : 'Show FLOWSTATE', click: toggleWindow },
+    { label: mainWindow?.isVisible() ? 'Hide FlowState' : 'Show FlowState', click: toggleWindow },
     { type: 'separator' },
-    { label: 'Quit FLOWSTATE', click: () => { isQuitting = true; app.quit() } },
+    { label: 'Quit FlowState', click: () => { isQuitting = true; app.quit() } },
   ]
 }
 function refreshTrayMenu() {
@@ -99,7 +99,7 @@ function refreshTrayMenu() {
     lastMenuState = menuState
     tray.setContextMenu(Menu.buildFromTemplate(buildTrayMenu()))
   }
-  tray.setToolTip(`FLOWSTATE · ${sessionName(trayState.kind)} · ${trayState.status === 'running' ? formatTrayTime(trayState.remainingSeconds) : trayState.status === 'paused' ? `Paused · ${formatTrayTime(trayState.remainingSeconds)}` : `Ready · ${formatTrayTime(trayState.remainingSeconds)}`}`)
+  tray.setToolTip(`FlowState · ${sessionName(trayState.kind)} · ${trayState.status === 'running' ? formatTrayTime(trayState.remainingSeconds) : trayState.status === 'paused' ? `Paused · ${formatTrayTime(trayState.remainingSeconds)}` : `Ready · ${formatTrayTime(trayState.remainingSeconds)}`}`)
 }
 function updateTray(value: unknown) {
   const parsed = parseTrayState(value)
@@ -114,7 +114,7 @@ function createWindow() {
   const trayIconPath = path.join(__dirname, '../assets/flowstate-tray.png')
   const window = new BrowserWindow({
     ...bounds, width: 320, height: 420, minWidth: 320, maxWidth: 320, minHeight: 420, maxHeight: 420,
-    title: 'FLOWSTATE', icon: nativeImage.createFromPath(iconPath), frame: false, resizable: false, show: false, backgroundColor: '#ECE8DF',
+    title: 'FlowState', icon: nativeImage.createFromPath(iconPath), frame: false, resizable: false, show: false, backgroundColor: '#ECE8DF',
     alwaysOnTop: saved.alwaysOnTop ?? false, autoHideMenuBar: true,
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false, sandbox: true },
   })

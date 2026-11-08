@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title">
-  <title id="title">FLOWSTATE ruler and playhead mark</title>
+  <title id="title">FlowState ruler and playhead mark</title>
   <defs>
     <symbol id="m" viewBox="0 0 256 256">
       <g fill="currentColor">

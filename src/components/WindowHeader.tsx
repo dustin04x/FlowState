@@ -22,14 +22,14 @@ export function WindowHeader({ view, alwaysOnTop, onView, onAlwaysOnTop }: Props
         </g>
         <rect x="158" y="60" width="10" height="132" fill="#FF4D1F" />
       </svg>
-      <span>FLOWSTATE</span>
+      <span>FlowState</span>
     </div>
     <nav className="header-actions" aria-label="App navigation">
       <button className={`header-link ${view === 'stats' ? 'selected' : ''}`} onClick={() => onView(view === 'stats' ? 'timer' : 'stats')} aria-label="Statistics"><ChartNoAxesColumn size={13} /><span>Stats</span></button>
       <button className={`header-link ${view === 'settings' ? 'selected' : ''}`} onClick={() => onView(view === 'settings' ? 'timer' : 'settings')} aria-label="Settings"><Settings2 size={13} /><span>Set</span></button>
       <button className={`window-action ${alwaysOnTop ? 'selected' : ''}`} onClick={onAlwaysOnTop} aria-label={alwaysOnTop ? 'Disable always on top' : 'Enable always on top'} title="Always on top">{alwaysOnTop ? <Pin size={12} /> : <PinOff size={12} />}</button>
       <button className="window-action" onClick={() => void window.flowstate?.minimize()} aria-label="Minimize"><Minus size={14} /></button>
-      <button className="window-action close-action" onClick={() => void window.flowstate?.close()} aria-label="Hide FLOWSTATE to tray" title="Hide to tray"><X size={14} /></button>
+      <button className="window-action close-action" onClick={() => void window.flowstate?.close()} aria-label="Hide FlowState to tray" title="Hide to tray"><X size={14} /></button>
     </nav>
   </header>
 }

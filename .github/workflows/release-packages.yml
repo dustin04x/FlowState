@@ -111,13 +111,13 @@ jobs:
         run: |
           case "$PACKAGE_KIND" in
             linux)
-              files=(outputs/final-release/FLOWSTATE-*-x86_64.AppImage outputs/final-release/FLOWSTATE-*-amd64.deb)
+              files=(outputs/final-release/FlowState-*-x86_64.AppImage outputs/final-release/FlowState-*-amd64.deb)
               ;;
             mac-x64)
-              files=(outputs/final-release/FLOWSTATE-*-x64.dmg)
+              files=(outputs/final-release/FlowState-*-x64.dmg)
               ;;
             mac-arm64)
-              files=(outputs/final-release/FLOWSTATE-*-arm64.dmg)
+              files=(outputs/final-release/FlowState-*-arm64.dmg)
               ;;
             *)
               echo "Unknown package kind: $PACKAGE_KIND"
@@ -147,13 +147,13 @@ jobs:
         run: |
           case "$PACKAGE_KIND" in
             linux)
-              files=(outputs/final-release/FLOWSTATE-*-x86_64.AppImage outputs/final-release/FLOWSTATE-*-amd64.deb)
+              files=(outputs/final-release/FlowState-*-x86_64.AppImage outputs/final-release/FlowState-*-amd64.deb)
               ;;
             mac-x64)
-              files=(outputs/final-release/FLOWSTATE-*-x64.dmg)
+              files=(outputs/final-release/FlowState-*-x64.dmg)
               ;;
             mac-arm64)
-              files=(outputs/final-release/FLOWSTATE-*-arm64.dmg)
+              files=(outputs/final-release/FlowState-*-arm64.dmg)
               ;;
           esac
 

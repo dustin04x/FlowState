@@ -17,5 +17,5 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["vitest/globals"]
   },
-  "include": ["src", "vite.config.mts"]
+  "include": ["src", "vite.config.mts", "website/vite.config.mts"]
 }

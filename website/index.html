@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#D9D5CB">
+    <meta name="description" content="A compact, local-first desktop focus timer. Start a session, take a break, and return to work with FlowState.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <title>FlowState — Get in. Lock in. Get out.</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/flowstate-mark.svg">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="sheet">
+      <header class="site-header">
+        <a class="brand" href="#" aria-label="FlowState home">
+          <img src="./assets/flowstate-mark.svg" alt="" width="42" height="42">
+          <span>FlowState</span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="#how-it-works">How it works</a>
+          <a href="#downloads">Downloads</a>
+          <a href="https://github.com/dustin04x/FLOWSTATE">Source on GitHub</a>
+        </nav>
+      </header>
+
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">One session.<br>One thing at a time.</h1>
+          <p>FlowState is a small desktop timer for getting into work, taking a break, and coming back without the extra machinery.</p>
+          <a class="primary-link" href="https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE.Setup.1.0.0.exe">
+            Download for Windows
+            <span>v1.0.0 · unsigned</span>
+          </a>
+          <p class="other-platforms">Also available for <a href="#downloads">macOS and Linux</a>.</p>
+        </div>
+        <figure class="hero-screen">
+          <img src="./assets/focus-idle.png" alt="FlowState's focus timer ready to start a 25-minute session">
+          <figcaption><span>FOCUS · READY</span><span>ACTUAL APP SCREEN</span></figcaption>
+        </figure>
+      </section>
+
+      <div class="playhead-rule" aria-hidden="true"><span></span></div>
+
+      <section class="how" id="how-it-works" aria-labelledby="how-title">
+        <div class="section-intro">
+          <h2 id="how-title">Get in. Lock in. Get out.</h2>
+          <p>Enough structure to settle into a session, without turning your day into another system to manage.</p>
+        </div>
+        <div class="session-steps">
+          <article>
+            <h3>Focus</h3>
+            <p>Start with 25, 45, or 60 minutes, or set a duration that fits the work.</p>
+          </article>
+          <article>
+            <h3>Take a break</h3>
+            <p>Set short and long breaks. Automatic starts are optional.</p>
+          </article>
+          <article>
+            <h3>Come back</h3>
+            <p>Keep the timer close or hide it to the tray; your session keeps going.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="local" aria-labelledby="local-title">
+        <figure class="stats-screen">
+          <img src="./assets/statistics.png" alt="FlowState statistics showing recent sessions, focus minutes, and a seven-day activity view">
+          <figcaption>A quiet record of focused time</figcaption>
+        </figure>
+        <div class="local-copy">
+          <h2 id="local-title">Your settings and history stay on your device.</h2>
+          <p>No account or sync service. FlowState stores timer settings and session activity locally.</p>
+          <p>Daily goals, recent activity, total focus time, completed sessions, and a current streak are there when you want them.</p>
+        </div>
+      </section>
+
+      <section class="break-proof" aria-labelledby="break-title">
+        <div>
+          <h2 id="break-title">A break is part of the session.</h2>
+          <p>Short and long breaks are configurable, with optional automatic starts for breaks and focus sessions.</p>
+        </div>
+        <figure>
+          <img src="./assets/break-mode.png" alt="FlowState short-break timer shown in its inverted dark theme">
+          <figcaption>BREAK · READY</figcaption>
+        </figure>
+      </section>
+
+      <section class="downloads" id="downloads" aria-labelledby="downloads-title">
+        <div class="downloads-heading">
+          <h2 id="downloads-title">Choose your download.</h2>
+          <p>Current release: v1.0.0. Existing installer filenames are unchanged.</p>
+        </div>
+        <div class="download-list">
+          <div class="download-row">
+            <h3>Windows</h3>
+            <a href="https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE.Setup.1.0.0.exe">Download the installer <span>· x64</span></a>
+            <p>The installer is unsigned; Windows may show a SmartScreen warning.</p>
+          </div>
+          <div class="download-row">
+            <h3>macOS</h3>
+            <p><a href="https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-arm64.dmg">Apple Silicon</a><span> · </span><a href="https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-x64.dmg">Intel</a></p>
+            <p>The app is unsigned and not notarized; Gatekeeper may warn or block it.</p>
+          </div>
+          <div class="download-row">
+            <h3>Linux</h3>
+            <p><a href="https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-x86_64.AppImage">AppImage</a><span> · </span><a href="https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-amd64.deb">Debian / Ubuntu (.deb)</a></p>
+            <p>Packages target x86_64. Packaged behavior outside Windows has not been verified on physical systems.</p>
+          </div>
+        </div>
+        <p class="release-note">The published v1.0.0 installers retain their original FLOWSTATE filenames and in-app casing.</p>
+      </section>
+
+      <footer class="site-footer">
+        <a class="footer-brand" href="https://github.com/dustin04x/FLOWSTATE">FlowState on GitHub</a>
+        <p>Founded and created by Skander Wali.</p>
+        <a href="https://github.com/dustin04x/FLOWSTATE/blob/main/LICENSE">MIT License</a>
+      </footer>
+    </main>
+  </body>
+</html>
