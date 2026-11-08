@@ -52,6 +52,30 @@ Download the [Windows installer for FLOWSTATE 1.0.0](https://github.com/dustin04
 
 The installer is unsigned, so Windows may show a SmartScreen warning when it is opened.
 
+## Install on macOS
+
+Download the DMG for your Mac:
+
+- [Apple Silicon (arm64)](https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-arm64.dmg)
+- [Intel (x64)](https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-x64.dmg)
+
+Open the DMG and move FLOWSTATE to Applications. The app is unsigned and not notarized; macOS Gatekeeper may warn or block it.
+
+## Install on Linux
+
+For Ubuntu or Debian on x86_64, install the [`.deb` package](https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-amd64.deb):
+
+```bash
+sudo apt install ./FLOWSTATE-1.0.0-amd64.deb
+```
+
+Or use the [AppImage](https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-x86_64.AppImage):
+
+```bash
+chmod +x FLOWSTATE-1.0.0-x86_64.AppImage
+./FLOWSTATE-1.0.0-x86_64.AppImage
+```
+
 ## Keyboard shortcuts
 
 Shortcuts are handled by the app window and are ignored while focus is in a text field.
@@ -84,6 +108,7 @@ assets/
   flowstate-logo.svg
   flowstate-mark.svg
   flowstate-mark.png
+  flowstate.icns
   flowstate-tray.png
   flowstate.ico
 docs/
@@ -141,7 +166,7 @@ Package the Windows installer:
 npm run dist:win
 ```
 
-The installer is written to `outputs/final-release/`; generated build and installer files are ignored by Git. A Linux packaging script exists in `package.json`, but Linux packaging and desktop integration have not been verified. No macOS release package is configured.
+Packages are written to `outputs/final-release/`; generated build and installer files are ignored by Git. Build macOS DMGs on a macOS host. The released macOS app is not signed or notarized. Package creation runs on native Linux and macOS CI runners, but platform-specific launch behavior and desktop/tray integration have not been verified on physical Linux or macOS systems.
 
 ## Contributing
 
