@@ -88,6 +88,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.event.release.tag_name || inputs.release_tag }}
+        shell: bash
         run: |
           if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Release tag must use vMAJOR.MINOR.PATCH format."
@@ -112,6 +113,7 @@ jobs:
         env:
           PACKAGE_KIND: ${{ matrix.package_kind }}
           EXPECTED_COUNT: ${{ matrix.expected_count }}
+        shell: bash
         run: |
           case "$PACKAGE_KIND" in
             linux)
@@ -152,6 +154,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PACKAGE_KIND: ${{ matrix.package_kind }}
           RELEASE_TAG: ${{ github.event.release.tag_name || inputs.release_tag }}
+        shell: bash
         run: |
           case "$PACKAGE_KIND" in
             linux)
