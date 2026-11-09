@@ -145,7 +145,7 @@ function createWindow() {
   const saved = readSettings()
   nativeTheme.themeSource = saved.theme ?? 'system'
   const bounds = saved.x !== undefined && saved.y !== undefined ? { x: saved.x, y: saved.y } : { center: true }
-  const iconPath = path.join(__dirname, '../assets/flowstate-mark.png')
+  const iconPath = path.join(__dirname, '../assets/flowstate.ico')
   const trayIconPath = path.join(__dirname, '../assets/flowstate-tray.png')
   const window = new BrowserWindow({
     ...bounds, width: 320, height: 420, minWidth: 320, maxWidth: 320, minHeight: 420, maxHeight: 420,
@@ -236,6 +236,8 @@ if (!gotTheLock) {
     showWindow()
   })
 }
+
+app.setAppUserModelId('com.flowstate.desktop')
 
 app.whenReady().then(() => {
   settingsPath = path.join(app.getPath('userData'), 'window.json')
