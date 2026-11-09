@@ -26,7 +26,7 @@ describe('FlowState website', () => {
     ]
 
     for (const asset of downloads) {
-      expect(site).toContain(`https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/${asset}`)
+      expect(site).toContain(`https://github.com/dustin04x/FlowState/releases/download/v1.0.0/${asset}`)
     }
   })
 

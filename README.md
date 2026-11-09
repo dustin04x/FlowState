@@ -6,7 +6,7 @@
 
 A compact, local-first desktop focus timer. Start a session, take a break, and come back to work without a bigger productivity system.
 
-**Website:** [FlowState on GitHub Pages](https://dustin04x.github.io/FLOWSTATE/)
+**Website:** [FlowState on GitHub Pages](https://dustin04x.github.io/FlowState/)
 
 The site publishes from `main` through GitHub Actions.
 
@@ -16,10 +16,10 @@ Current release: **v1.0.0**
 
 | Platform | Download |
 |---|---|
-| Windows | [Installer](https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE.Setup.1.0.0.exe) |
-| macOS — Apple Silicon | [DMG](https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-arm64.dmg) |
-| macOS — Intel | [DMG](https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-x64.dmg) |
-| Linux — Ubuntu/Debian | [`.deb`](https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-amd64.deb) · [AppImage](https://github.com/dustin04x/FLOWSTATE/releases/download/v1.0.0/FLOWSTATE-1.0.0-x86_64.AppImage) |
+| Windows | [Installer](https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE.Setup.1.0.0.exe) |
+| macOS — Apple Silicon | [DMG](https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE-1.0.0-arm64.dmg) |
+| macOS — Intel | [DMG](https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE-1.0.0-x64.dmg) |
+| Linux — Ubuntu/Debian | [`.deb`](https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE-1.0.0-amd64.deb) · [AppImage](https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE-1.0.0-x86_64.AppImage) |
 
 The Windows installer is unsigned and may show a SmartScreen warning. The macOS app is unsigned and not notarized; Gatekeeper may warn or block it. Linux and macOS package behavior has not been verified on physical systems.
 
@@ -46,8 +46,8 @@ These are captures of the actual Windows app.
 Requires Node.js and npm.
 
 ```powershell
-git clone https://github.com/dustin04x/FLOWSTATE.git
-cd FLOWSTATE
+git clone https://github.com/dustin04x/FlowState.git
+cd FlowState
 npm ci
 npm run dev
 ```

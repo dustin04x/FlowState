@@ -1,5 +1,5 @@
 interface Window {
-  flowstate: {
+  FlowState: {
     platform: string
     minimize: () => Promise<void>
     close: () => Promise<void>

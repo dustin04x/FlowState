@@ -50,7 +50,7 @@ function App() {
   const dailyStat = saved.history.find((entry) => entry.date === today)
   const dailySessions = dailyStat?.sessions ?? 0
   const progress = progressFraction(session, kindDuration(session.kind, settings), now)
-  const supportsStartup = window.flowstate?.platform === 'win32' || window.flowstate?.platform === 'darwin'
+  const supportsStartup = window.FlowState?.platform === 'win32' || window.FlowState?.platform === 'darwin'
   const update = useCallback((fn: (current: Saved) => Saved) => setSaved((current) => fn(current)), [])
 
   useEffect(() => { localStorage.setItem(storageKey, JSON.stringify(saved)) }, [saved])
@@ -123,7 +123,7 @@ function App() {
   const toggleSetting = (key: 'autoBreaks' | 'autoFocus' | 'sound' | 'alwaysOnTop' | 'launchOnStartup') => {
     const value = !settings[key]
     update((current) => ({ ...current, settings: { ...current.settings, [key]: value } }))
-    const applyNative = key === 'alwaysOnTop' ? window.flowstate?.setAlwaysOnTop(value) : key === 'launchOnStartup' ? window.flowstate?.setLaunchOnStartup(value) : undefined
+    const applyNative = key === 'alwaysOnTop' ? window.FlowState?.setAlwaysOnTop(value) : key === 'launchOnStartup' ? window.FlowState?.setLaunchOnStartup(value) : undefined
     if (applyNative) void applyNative.then((success) => {
       if (!success) update((current) => ({ ...current, settings: { ...current.settings, [key]: !value } }))
     }).catch(() => update((current) => ({ ...current, settings: { ...current.settings, [key]: !value } })))
@@ -155,9 +155,9 @@ function App() {
   const remaining = remainingMs(session, now)
   const remainingSeconds = Math.ceil(remaining / 1000)
   useEffect(() => {
-    window.flowstate?.updateTrayState({ kind: session.kind, status: session.status, remainingSeconds, completed: dailySessions, goal: settings.dailyGoal, focusDuration: settings.focus })
+    window.FlowState?.updateTrayState({ kind: session.kind, status: session.status, remainingSeconds, completed: dailySessions, goal: settings.dailyGoal, focusDuration: settings.focus })
   }, [dailySessions, remainingSeconds, session.kind, session.status, settings.dailyGoal, settings.focus])
-  useEffect(() => window.flowstate?.onTrayAction((action) => {
+  useEffect(() => window.FlowState?.onTrayAction((action) => {
     if (action === 'toggle') toggleTimer()
     else if (action === 'reset') reset()
     else if (action === 'skip') skip()

@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-contextBridge.exposeInMainWorld('flowstate', {
+contextBridge.exposeInMainWorld('FlowState', {
   platform: process.platform,
   minimize: () => ipcRenderer.invoke('window:minimize') as Promise<void>,
   close: () => ipcRenderer.invoke('window:close') as Promise<void>,
