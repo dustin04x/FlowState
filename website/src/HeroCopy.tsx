@@ -16,7 +16,7 @@ export function HeroCopy() {
       </p>
       <a
         className="primary-link"
-        href="https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE.Setup.1.0.0.exe"
+        href="https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-x64.exe"
       >
         Download for Windows
         <span>v1.0.0 · unsigned</span>

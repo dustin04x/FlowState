@@ -4,6 +4,12 @@
   <img src="./assets/flowstate-logo.svg" alt="FlowState — Get in. Lock in. Get out." width="480">
 </p>
 
+<p align="center">
+  <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+  <a href="https://github.com/dustin04x/FlowState/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/dustin04x/FlowState"></a>
+  <a href="https://dustin04x.github.io/FlowState/"><img alt="Website" src="https://img.shields.io/badge/website-GitHub%20Pages-blue"></a>
+</p>
+
 A compact, local-first desktop focus timer. Start a session, take a break, and come back to work without a bigger productivity system.
 
 **Website:** [FlowState on GitHub Pages](https://dustin04x.github.io/FlowState/)
@@ -12,20 +18,19 @@ The site publishes from `main` through GitHub Actions.
 
 ## Download
 
-Current release: **v1.0.0**
+Latest release: **[v1.0.1](https://github.com/dustin04x/FlowState/releases/tag/v1.0.1)**
 
 | Platform | Download |
 |---|---|
-| Windows | [Installer](https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE.Setup.1.0.0.exe) |
-| macOS — Apple Silicon | [DMG](https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE-1.0.0-arm64.dmg) |
-| macOS — Intel | [DMG](https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE-1.0.0-x64.dmg) |
-| Linux — Ubuntu/Debian | [`.deb`](https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE-1.0.0-amd64.deb) · [AppImage](https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE-1.0.0-x86_64.AppImage) |
+| Windows | [Installer (x64)](https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-x64.exe) |
+| macOS — Apple Silicon | [DMG](https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-arm64.dmg) |
+| macOS — Intel | [DMG](https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-x64.dmg) |
+| Linux — Ubuntu/Debian | [`.deb`](https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-amd64.deb) |
+| Linux — AppImage | [AppImage](https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-x86_64.AppImage) |
 
-The Windows installer is unsigned and may show a SmartScreen warning. The macOS app is unsigned and not notarized; Gatekeeper may warn or block it. Linux and macOS package behavior has not been verified on physical systems.
+The Windows installer and macOS app are unsigned, so SmartScreen or Gatekeeper may warn. Linux and macOS packages have not been verified on physical systems.
 
-The published v1.0.0 files keep their original `FLOWSTATE` filenames and in-app casing. New packages use the `FlowState` spelling.
-
-## What it does
+## Features
 
 - Focus presets of 25, 45, and 60 minutes, plus adjustable focus time.
 - Configurable short and long breaks, daily goals, and optional automatic starts.
@@ -35,7 +40,7 @@ The published v1.0.0 files keep their original `FLOWSTATE` filenames and in-app 
 
 ## Screenshots
 
-These are captures of the actual Windows app.
+Captures of the actual Windows app.
 
 | Focus | Break | Activity |
 |---|---|---|
@@ -52,7 +57,7 @@ npm ci
 npm run dev
 ```
 
-Run the app checks and build:
+Checks and build:
 
 ```powershell
 npm test
@@ -60,7 +65,7 @@ npm run typecheck
 npm run build
 ```
 
-Run or build the website separately:
+Website:
 
 ```powershell
 npm run website:dev

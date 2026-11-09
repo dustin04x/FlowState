@@ -18,7 +18,6 @@ describe('FlowState website', () => {
 
   it('links to every published platform download without changing asset URLs', () => {
     const downloads = [
-      'FLOWSTATE.Setup.1.0.0.exe',
       'FLOWSTATE-1.0.0-arm64.dmg',
       'FLOWSTATE-1.0.0-x64.dmg',
       'FLOWSTATE-1.0.0-amd64.deb',
@@ -28,6 +27,8 @@ describe('FlowState website', () => {
     for (const asset of downloads) {
       expect(site).toContain(`https://github.com/dustin04x/FlowState/releases/download/v1.0.0/${asset}`)
     }
+
+    expect(site).toContain('https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-x64.exe')
   })
 
   it('discloses the unsigned and unnotarized desktop packages', () => {
