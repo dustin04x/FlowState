@@ -18,15 +18,15 @@ The site publishes from `main` through GitHub Actions.
 
 ## Download
 
-Latest release: **[v1.0.1](https://github.com/dustin04x/FlowState/releases/tag/v1.0.1)**
+Latest release: **[v1.0.2](https://github.com/dustin04x/FlowState/releases/tag/v1.0.2)**
 
 | Platform | Download |
 |---|---|
-| Windows | [Installer (x64)](https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-x64.exe) |
-| macOS — Apple Silicon | [DMG](https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-arm64.dmg) |
-| macOS — Intel | [DMG](https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-x64.dmg) |
-| Linux — Ubuntu/Debian | [`.deb`](https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-amd64.deb) |
-| Linux — AppImage | [AppImage](https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-x86_64.AppImage) |
+| Windows | [Installer (x64)](https://github.com/dustin04x/FlowState/releases/download/v1.0.2/FlowState-1.0.2-x64.exe) |
+| macOS — Apple Silicon | [DMG](https://github.com/dustin04x/FlowState/releases/download/v1.0.2/FlowState-1.0.2-arm64.dmg) |
+| macOS — Intel | [DMG](https://github.com/dustin04x/FlowState/releases/download/v1.0.2/FlowState-1.0.2-x64.dmg) |
+| Linux — Ubuntu/Debian | [`.deb`](https://github.com/dustin04x/FlowState/releases/download/v1.0.2/FlowState-1.0.2-amd64.deb) |
+| Linux — AppImage | [AppImage](https://github.com/dustin04x/FlowState/releases/download/v1.0.2/FlowState-1.0.2-x86_64.AppImage) |
 
 The Windows installer and macOS app are unsigned, so SmartScreen or Gatekeeper may warn. Linux and macOS packages have not been verified on physical systems.
 

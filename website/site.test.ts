@@ -28,7 +28,7 @@ describe('FlowState website', () => {
       expect(site).toContain(`https://github.com/dustin04x/FlowState/releases/download/v1.0.0/${asset}`)
     }
 
-    expect(site).toContain('https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-x64.exe')
+    expect(site).toContain('https://github.com/dustin04x/FlowState/releases/download/v1.0.2/FlowState-1.0.2-x64.exe')
   })
 
   it('discloses the unsigned and unnotarized desktop packages', () => {
