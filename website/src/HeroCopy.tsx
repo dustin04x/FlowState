@@ -19,7 +19,7 @@ export function HeroCopy() {
         href="https://github.com/dustin04x/FlowState/releases/download/v1.0.1/FlowState-1.0.0-x64.exe"
       >
         Download for Windows
-        <span>v1.0.0 · unsigned</span>
+        <span>v1.0.1 · unsigned</span>
       </a>
       <p className="other-platforms">
         Also available for <a href="#downloads">macOS and Linux</a>.
