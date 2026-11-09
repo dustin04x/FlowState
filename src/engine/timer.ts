@@ -1,6 +1,13 @@
 export type SessionKind = 'focus' | 'shortBreak' | 'longBreak'
 export type TimerStatus = 'idle' | 'running' | 'paused'
-export interface TimerSession { kind: SessionKind; status: TimerStatus; deadline: number | null; remainingMs: number }
+// durationMs is the full length the session was created with. It is optional so
+// sessions saved by earlier versions (which lack it) still load.
+export interface TimerSession { kind: SessionKind; status: TimerStatus; deadline: number | null; remainingMs: number; durationMs?: number }
+export const MAX_SESSION_MINUTES = 90
+export const sessionMinutes = (session: TimerSession, fallbackMinutes: number): number =>
+  typeof session.durationMs === 'number' && Number.isFinite(session.durationMs) && session.durationMs > 0
+    ? Math.max(1, Math.round(session.durationMs / 60_000))
+    : fallbackMinutes
 export const FOCUS_PRESETS = [25, 45, 60] as const
 export type FocusPreset = (typeof FOCUS_PRESETS)[number]
 export type DailyGoalProgress = { completed: number; goal: number; remaining: number; fraction: number }
@@ -13,6 +20,7 @@ export const dailyGoalProgress = (completed: number, goal: number): DailyGoalPro
 }
 export const createSession = (kind: SessionKind, minutes: number, _now = Date.now()): TimerSession => ({
   kind, status: 'idle', deadline: null, remainingMs: minutes * 60_000,
+  durationMs: minutes * 60_000,
 })
 export const startSession = (session: TimerSession, now = Date.now()): TimerSession => ({
   ...session, status: 'running', deadline: now + session.remainingMs,

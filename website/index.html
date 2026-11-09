@@ -25,15 +25,7 @@
       </header>
 
       <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <h1 id="hero-title">One session.<br>One thing at a time.</h1>
-          <p>FlowState is a small desktop timer for getting into work, taking a break, and coming back without the extra machinery.</p>
-          <a class="primary-link" href="https://github.com/dustin04x/FlowState/releases/download/v1.0.0/FLOWSTATE.Setup.1.0.0.exe">
-            Download for Windows
-            <span>v1.0.0 · unsigned</span>
-          </a>
-          <p class="other-platforms">Also available for <a href="#downloads">macOS and Linux</a>.</p>
-        </div>
+        <div id="hero-copy"></div>
         <figure class="hero-screen">
           <img src="./assets/focus-idle.png" alt="FlowState's focus timer ready to start a 25-minute session">
           <figcaption><span>FOCUS · READY</span><span>ACTUAL APP SCREEN</span></figcaption>
@@ -42,7 +34,7 @@
 
       <div class="playhead-rule" aria-hidden="true"><span></span></div>
 
-      <section class="how" id="how-it-works" aria-labelledby="how-title">
+      <section class="how" id="how-it-works" aria-labelledby="how-title" data-reveal>
         <div class="section-intro">
           <h2 id="how-title">Get in. Lock in. Get out.</h2>
           <p>Enough structure to settle into a session, without turning your day into another system to manage.</p>
@@ -63,7 +55,7 @@
         </div>
       </section>
 
-      <section class="local" aria-labelledby="local-title">
+      <section class="local" aria-labelledby="local-title" data-reveal>
         <figure class="stats-screen">
           <img src="./assets/statistics.png" alt="FlowState statistics showing recent sessions, focus minutes, and a seven-day activity view">
           <figcaption>A quiet record of focused time</figcaption>
@@ -75,7 +67,7 @@
         </div>
       </section>
 
-      <section class="break-proof" aria-labelledby="break-title">
+      <section class="break-proof" aria-labelledby="break-title" data-reveal>
         <div>
           <h2 id="break-title">A break is part of the session.</h2>
           <p>Short and long breaks are configurable, with optional automatic starts for breaks and focus sessions.</p>
@@ -86,7 +78,7 @@
         </figure>
       </section>
 
-      <section class="downloads" id="downloads" aria-labelledby="downloads-title">
+      <section class="downloads" id="downloads" aria-labelledby="downloads-title" data-reveal>
         <div class="downloads-heading">
           <h2 id="downloads-title">Choose your download.</h2>
           <p>Current release: v1.0.0. Existing installer filenames are unchanged.</p>
@@ -117,5 +109,6 @@
         <a href="https://github.com/dustin04x/FlowState/blob/main/LICENSE">MIT License</a>
       </footer>
     </main>
+    <script type="module" src="./src/main.tsx"></script>
   </body>
 </html>

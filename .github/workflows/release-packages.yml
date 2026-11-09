@@ -59,6 +59,10 @@ jobs:
             package_script: dist:linux
             package_kind: linux
             expected_count: 2
+          - os: windows-latest
+            package_script: dist:win
+            package_kind: windows
+            expected_count: 1
           - os: macos-latest
             package_script: dist:mac:x64
             package_kind: mac-x64
@@ -119,6 +123,10 @@ jobs:
             mac-arm64)
               files=(outputs/final-release/FlowState-*-arm64.dmg)
               ;;
+            windows)
+              files=(outputs/final-release/FlowState-*-x64.exe)
+              ;;
+
             *)
               echo "Unknown package kind: $PACKAGE_KIND"
               exit 1
@@ -155,6 +163,14 @@ jobs:
             mac-arm64)
               files=(outputs/final-release/FlowState-*-arm64.dmg)
               ;;
+            windows)
+              files=(outputs/final-release/FlowState-*-x64.exe)
+              ;;
+            *)
+              echo "Unknown package kind: $PACKAGE_KIND"
+              exit 1
+              ;;
+
           esac
 
           gh release upload "$RELEASE_TAG" "${files[@]}" --clobber
