@@ -107,6 +107,7 @@ jobs:
       - name: Build platform package
         env:
           PACKAGE_SCRIPT: ${{ matrix.package_script }}
+        shell: bash
         run: npm run "$PACKAGE_SCRIPT"
 
       - name: Verify package artifacts
