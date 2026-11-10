@@ -23,14 +23,28 @@ let lastMenuState = ''
 let trayState: TrayState = { kind: 'focus', status: 'idle', remainingSeconds: 1500, completed: 0, goal: 4, focusDuration: 25 }
 let lastTimerSnapshot: TimerStateSnapshot | null = null
 
+const readJson = (file: string): Record<string, unknown> => {
+  try {
+    const parsed: unknown = JSON.parse(fs.readFileSync(file, 'utf8'))
+    return parsed !== null && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed as Record<string, unknown> : {}
+  } catch { return {} }
+}
+const isFiniteNumber = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value)
 const readSettings = (): WindowSettings => {
-  try { return JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as WindowSettings } catch { return {} }
+  const raw = readJson(settingsPath)
+  const settings: WindowSettings = {}
+  if (isFiniteNumber(raw.x) && isFiniteNumber(raw.y)) { settings.x = raw.x; settings.y = raw.y }
+  if (typeof raw.alwaysOnTop === 'boolean') settings.alwaysOnTop = raw.alwaysOnTop
+  if (raw.theme === 'system' || raw.theme === 'light' || raw.theme === 'dark') settings.theme = raw.theme
+  return settings
 }
-const writeSettings = (next: WindowSettings) => {
-  const current = readSettings()
-  fs.mkdirSync(path.dirname(settingsPath), { recursive: true })
-  fs.writeFileSync(settingsPath, JSON.stringify({ ...current, ...next }), 'utf8')
+const writeJson = (file: string, value: object) => {
+  try {
+    fs.mkdirSync(path.dirname(file), { recursive: true })
+    fs.writeFileSync(file, JSON.stringify(value), 'utf8')
+  } catch { /* Window geometry and theme are conveniences; a failed write must not crash the app. */ }
 }
+const writeSettings = (next: WindowSettings) => writeJson(settingsPath, { ...readSettings(), ...next })
 function normalizeUrl(url: string): string {
   try { const u = new URL(url); return u.origin + u.pathname } catch { return url }
 }
@@ -100,7 +114,7 @@ function parseTimerState(value: unknown): TimerStateSnapshot | null {
 }
 const windowBackground = () => nativeTheme.shouldUseDarkColors ? '#151513' : '#F2F0E9'
 function buildTrayMenu(): MenuItemConstructorOptions[] {
-  const timerLabel = trayState.status === 'running' ? `Pause ${sessionName(trayState.kind).toLowerCase()}` : trayState.status === 'paused' ? 'Resume timer' : 'Start focus'
+  const timerLabel = trayState.status === 'running' ? `Pause ${sessionName(trayState.kind).toLowerCase()}` : trayState.status === 'paused' ? 'Resume timer' : `Start ${sessionName(trayState.kind).toLowerCase()}`
   const goalLabel = trayState.completed >= trayState.goal
     ? `Daily goal reached · ${trayState.goal}/${trayState.goal}`
     : `Today · ${Math.min(trayState.goal, trayState.completed)}/${trayState.goal} focus sessions`
@@ -128,7 +142,7 @@ function buildTrayMenu(): MenuItemConstructorOptions[] {
 }
 function refreshTrayMenu() {
   if (!tray) return
-  const menuState = `${trayState.kind}|${trayState.status}|${trayState.completed}|${trayState.goal}|${trayState.focusDuration}|${mainWindow?.isVisible()}`
+  const menuState = `${trayState.kind}|${trayState.status}|${trayState.remainingSeconds}|${trayState.completed}|${trayState.goal}|${trayState.focusDuration}|${mainWindow?.isVisible()}`
   if (menuState !== lastMenuState) {
     lastMenuState = menuState
     tray.setContextMenu(Menu.buildFromTemplate(buildTrayMenu()))
@@ -151,7 +165,7 @@ function createWindow() {
     ...bounds, width: 320, height: 420, minWidth: 320, maxWidth: 320, minHeight: 420, maxHeight: 420,
     title: 'FlowState', icon: nativeImage.createFromPath(iconPath), frame: false, resizable: false, show: false, backgroundColor: windowBackground(),
     alwaysOnTop: saved.alwaysOnTop ?? false, autoHideMenuBar: true,
-    webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false, sandbox: true },
+    webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false, sandbox: true, backgroundThrottling: false },
   })
   mainWindow = window
   window.setIcon(nativeImage.createFromPath(iconPath))
@@ -214,12 +228,14 @@ function createMiniWindow() {
 }
 
 function readMiniSettings(): MiniWindowSettings {
-  try { return JSON.parse(fs.readFileSync(miniSettingsPath, 'utf8')) as MiniWindowSettings } catch { return {} }
+  const raw = readJson(miniSettingsPath)
+  const settings: MiniWindowSettings = {}
+  if (isFiniteNumber(raw.x) && isFiniteNumber(raw.y)) { settings.x = raw.x; settings.y = raw.y }
+  if (typeof raw.alwaysOnTop === 'boolean') settings.alwaysOnTop = raw.alwaysOnTop
+  return settings
 }
 function writeMiniSettings(next: MiniWindowSettings) {
-  const current = readMiniSettings()
-  fs.mkdirSync(path.dirname(miniSettingsPath), { recursive: true })
-  fs.writeFileSync(miniSettingsPath, JSON.stringify({ ...current, ...next }), 'utf8')
+  writeJson(miniSettingsPath, { ...readMiniSettings(), ...next })
 }
 function sendTimerStateToMini(snapshot: TimerStateSnapshot) {
   lastTimerSnapshot = snapshot
@@ -240,7 +256,7 @@ if (!gotTheLock) {
 
 app.setAppUserModelId('com.flowstate.desktop')
 
-app.whenReady().then(() => {
+if (gotTheLock) app.whenReady().then(() => {
   settingsPath = path.join(app.getPath('userData'), 'window.json')
   miniSettingsPath = path.join(app.getPath('userData'), 'mini-window.json')
   const saved = readSettings()

@@ -67,6 +67,7 @@
         "AppImage",
         "deb"
       ],
+      "icon": "assets/flowstate-mark.png",
       "artifactName": "${productName}-${version}-${arch}.${ext}",
       "category": "Utility"
     },

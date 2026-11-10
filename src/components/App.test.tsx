@@ -1,5 +1,5 @@
 /** @vitest-environment jsdom */
-import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, cleanup, act } from '@testing-library/react'
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest'
 import App from '../App'
 
@@ -280,6 +280,50 @@ describe('App persistence', () => {
     fireEvent.keyDown(window, { key: 'Escape' })
     fireEvent.keyDown(window, { key: 'i', ctrlKey: true })
     await waitFor(() => expect(screen.queryByText('2')).toBeNull())
+  })
+})
+
+describe('timer display stability', () => {
+  it('keeps progress based on the running session own duration when the focus setting changes', () => {
+    const now = Date.now()
+    saveState({
+      settings: { ...defaultSettings, focus: 25 },
+      session: { kind: 'focus', status: 'running', deadline: now + 15 * 60_000, remainingMs: 15 * 60_000, durationMs: 30 * 60_000 },
+      completed: 0,
+      totalMinutes: 0,
+      history: [],
+    })
+    render(<App />)
+    // A 30-minute session with 15 minutes left is half done.
+    expect(screen.getByRole('img', { name: /percent complete/ }).getAttribute('aria-label')).toBe('Session 50 percent complete')
+    fireEvent.keyDown(window, { key: ',', ctrlKey: true })
+    fireEvent.click(screen.getByRole('button', { name: /Increase Focus duration/ }))
+    fireEvent.keyDown(window, { key: 'Escape' })
+    // Changing the next session's length must not rescale the running one.
+    expect(screen.getByRole('img', { name: /percent complete/ }).getAttribute('aria-label')).toBe('Session 50 percent complete')
+  })
+
+  it('records a completion on the day it finishes rather than the day the app launched', () => {
+    vi.useFakeTimers()
+    try {
+      vi.setSystemTime(new Date(2026, 10, 8, 23, 59, 30))
+      saveState({
+        settings: { ...defaultSettings, focus: 25 },
+        session: { kind: 'focus', status: 'running', deadline: Date.now() + 5_000, remainingMs: 5_000, durationMs: 25 * 60_000 },
+        completed: 0,
+        totalMinutes: 0,
+        history: [],
+      })
+      render(<App />)
+      act(() => {
+        vi.setSystemTime(new Date(2026, 10, 9, 0, 0, 1))
+        vi.advanceTimersByTime(1_000)
+      })
+      const stored = JSON.parse(localStorage.getItem(storageKey)!)
+      expect(stored.history[0].date).toBe('2026-11-09')
+    } finally {
+      vi.useRealTimers()
+    }
   })
 })
 

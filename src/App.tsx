@@ -58,7 +58,8 @@ function App() {
   const today = dayKey(new Date(now))
   const dailyStat = saved.history.find((entry) => entry.date === today)
   const dailySessions = dailyStat?.sessions ?? 0
-  const progress = progressFraction(session, kindDuration(session.kind, settings), now)
+  const sessionLength = sessionMinutes(session, kindDuration(session.kind, settings))
+  const progress = progressFraction(session, sessionLength, now)
   const supportsStartup = window.FlowState?.platform === 'win32' || window.FlowState?.platform === 'darwin'
   const update = useCallback((fn: (current: Saved) => Saved) => setSaved((current) => fn(current)), [])
   const theme = useTheme(settings.theme)
@@ -75,6 +76,8 @@ function App() {
     try {
       const context = audioRef.current ?? new AudioContext()
       audioRef.current = context
+      // Chromium can suspend the context after sleep or long inactivity.
+      if (context.state === 'suspended') void context.resume()
       playChimeSound(context, kind)
     } catch { /* Sound is optional; the timer continues if audio is unavailable. */ }
   }, [settings.sound])
@@ -82,7 +85,7 @@ function App() {
   const start = useCallback(() => { setMessage(''); update((current) => ({ ...current, session: current.session.status === 'paused' ? resumeSession(current.session) : startSession(current.session) })) }, [update])
   const pause = useCallback(() => { setMessage(''); update((current) => ({ ...current, session: pauseSession(current.session) })) }, [update])
   const reset = useCallback(() => { setMessage(''); setCompletionCue(false); update((current) => ({ ...current, session: createSession(current.session.kind, kindDuration(current.session.kind, current.settings)) })) }, [update])
-  const advance = useCallback((current: Saved, countFocus: boolean): Saved => {
+  const advance = useCallback((current: Saved, countFocus: boolean, date: string): Saved => {
     const completed = current.completed + (countFocus ? 1 : 0)
     const kind = nextSessionKind(current.session.kind, completed, current.settings.interval)
     const next = createSession(kind, kindDuration(kind, current.settings))
@@ -90,7 +93,6 @@ function App() {
     const focusMinutes = sessionMinutes(current.session, current.settings.focus)
     const result: Saved = { ...current, completed, totalMinutes: current.totalMinutes + (countFocus ? focusMinutes : 0), session: started ? startSession(next) : next }
     if (countFocus) {
-      const date = today
       const previous = result.history.find((entry) => entry.date === date)
       result.history = previous
         ? result.history.map((entry) => entry.date === date ? { ...entry, sessions: entry.sessions + 1, minutes: entry.minutes + focusMinutes } : entry)
@@ -104,9 +106,10 @@ function App() {
     if (session === finishedSessionRef.current) return
     const countedFocus = !skipped && session.kind === 'focus'
     const focusMinutes = countedFocus ? sessionMinutes(session, settings.focus) : 0
-    update((current) => advance(current, countedFocus))
+    const completionDate = dayKey(new Date())
+    update((current) => advance(current, countedFocus, completionDate))
     finishedSessionRef.current = session
-    playSound(countedFocus ? 'completion' : 'break')
+    if (!skipped) playSound(countedFocus ? 'completion' : 'break')
     setMessage(skipped ? 'Session skipped.' : countedFocus ? `Session complete · +${focusMinutes} min.` : 'Break complete.')
     if (timeoutRef.current) window.clearTimeout(timeoutRef.current)
     if (!skipped) {
@@ -181,7 +184,7 @@ function App() {
   const streak = currentDailyStreak(saved.history.filter((entry) => entry.sessions > 0).map((entry) => entry.date), today)
   const remaining = remainingMs(session, now)
   const remainingSeconds = Math.ceil(remaining / 1000)
-  const durationSeconds = kindDuration(session.kind, settings) * 60
+  const durationSeconds = sessionLength * 60
   useEffect(() => {
     const snapshot = { kind: session.kind, status: session.status, remainingSeconds, completed: dailySessions, goal: settings.dailyGoal, focusDuration: settings.focus, durationSeconds, progress, theme }
     window.FlowState?.updateTrayState({ kind: session.kind, status: session.status, remainingSeconds, completed: dailySessions, goal: settings.dailyGoal, focusDuration: settings.focus })
@@ -207,7 +210,7 @@ function App() {
 
   return <main className={rootClass} data-session={session.kind} data-status={session.status}>
     <AppHeader view={view} alwaysOnTop={settings.alwaysOnTop} miniWindowOpen={miniWindowOpen} onView={setView} onAlwaysOnTop={() => toggleSetting('alwaysOnTop')} onDetach={openMiniWindow} />
-    {view === 'timer' && <TimerView kind={session.kind} status={session.status} focusDuration={settings.focus} sessionLength={kindDuration(session.kind, settings)} minutes={formatTime(remaining).slice(0, 2)} seconds={formatTime(remaining).slice(3)} progress={progress} dailySessions={dailySessions} sessionGoal={settings.dailyGoal} totalFocusMinutes={saved.totalMinutes} message={statusMessage} completionCue={completionCue} onSelectKind={selectKind} onPreset={selectPreset} onToggle={toggleTimer} onReset={reset} onSkip={skip} />}
+    {view === 'timer' && <TimerView kind={session.kind} status={session.status} focusDuration={sessionMinutes(session, settings.focus)} sessionLength={sessionLength} minutes={formatTime(remaining).slice(0, 2)} seconds={formatTime(remaining).slice(3)} progress={progress} dailySessions={dailySessions} sessionGoal={settings.dailyGoal} totalFocusMinutes={saved.totalMinutes} message={statusMessage} completionCue={completionCue} onSelectKind={selectKind} onPreset={selectPreset} onToggle={toggleTimer} onReset={reset} onSkip={skip} />}
     {view === 'settings' && <SettingsView settings={settings} supportsStartup={supportsStartup} onNumber={setDuration} onToggle={toggleSetting} onTheme={changeTheme} />}
     {view === 'stats' && <StatsView completedSessions={saved.completed} totalMinutes={saved.totalMinutes} streak={streak} dailySessions={dailySessions} dailyGoal={settings.dailyGoal} days={statsDays} />}
   </main>
