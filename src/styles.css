@@ -1,59 +1,63 @@
-/* FlowState — warm paper, precision numerals, one instrument. */
+/* FlowState — Apple-inspired minimalism, quiet motion, precise focus. */
 
 :root,
 [data-theme='light'] {
   color-scheme: light;
-  --bg: #f2f0e9;
-  --ink: #191916;
-  --ink-2: #605d56;
-  --ink-3: #706d65;
-  --line: #dad6cc;
-  --line-strong: #c9c5ba;
-  --surface: #e9e6dd;
-  --surface-2: #e0dcd2;
-  --brand: #c05a36;
-  --accent-focus: #b45f3b;
-  --accent-ink-focus: #93452a;
-  --accent-short: #6b8565;
-  --accent-ink-short: #4e6849;
-  --accent-long: #687f94;
-  --accent-ink-long: #4d6579;
+  --bg: #f5f5f7;
+  --bg-elevated: rgba(255, 255, 255, 0.72);
+  --ink: #1d1d1f;
+  --ink-2: #5f5f67;
+  --ink-3: #8b8b93;
+  --line: #e5e5ea;
+  --line-strong: #d9d9df;
+  --surface: rgba(255, 255, 255, 0.7);
+  --surface-2: rgba(245, 245, 247, 0.9);
+  --brand: #d86d55;
+  --accent-focus: #da7a5b;
+  --accent-ink-focus: #8a4837;
+  --accent-short: #6d9a75;
+  --accent-ink-short: #3d5d45;
+  --accent-long: #6d8fb2;
+  --accent-ink-long: #3f5874;
   --accent: var(--accent-focus);
   --accent-ink: var(--accent-ink-focus);
-  --primary: var(--ink);
-  --primary-ink: var(--bg);
-  --hover: color-mix(in srgb, var(--ink) 6%, transparent);
-  --progress-track: color-mix(in srgb, var(--ink) 10%, transparent);
-  --menu-shadow: 0 14px 34px rgb(25 25 22 / 14%), 0 2px 6px rgb(25 25 22 / 6%);
+  --primary: #1d1d1f;
+  --primary-ink: #f5f5f7;
+  --hover: rgba(29, 29, 31, 0.06);
+  --progress-track: rgba(29, 29, 31, 0.12);
+  --menu-shadow: 0 22px 40px rgba(15, 15, 20, 0.12), 0 2px 12px rgba(15, 15, 20, 0.08);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --fast: 140ms;
-  --base: 200ms;
+  --base: 220ms;
+  --shell-glow: radial-gradient(circle at top, rgba(255, 255, 255, 0.9), rgba(245, 245, 247, 0.72) 35%, rgba(234, 234, 239, 0.8) 100%);
 }
 
 [data-theme='dark'] {
   color-scheme: dark;
-  --bg: #151513;
-  --ink: #ece9e1;
-  --ink-2: #a6a39b;
-  --ink-3: #8b887f;
-  --line: #2d2c28;
-  --line-strong: #3a3934;
-  --surface: #1d1c19;
-  --surface-2: #252420;
-  --brand: #d0714b;
-  --accent-focus: #c97750;
-  --accent-ink-focus: #e0a07c;
-  --accent-short: #8ca486;
-  --accent-ink-short: #a9bba3;
-  --accent-long: #8aa1b6;
-  --accent-ink-long: #a8b9c9;
+  --bg: #1b1b1f;
+  --bg-elevated: rgba(28, 28, 32, 0.76);
+  --ink: #f5f5f7;
+  --ink-2: #b2b2ba;
+  --ink-3: #8a8a92;
+  --line: #2a2a2f;
+  --line-strong: #3d3d45;
+  --surface: rgba(28, 28, 32, 0.72);
+  --surface-2: rgba(36, 36, 41, 0.9);
+  --brand: #e08c69;
+  --accent-focus: #e18f6a;
+  --accent-ink-focus: #f1bb9d;
+  --accent-short: #8db290;
+  --accent-ink-short: #c7d9c9;
+  --accent-long: #9aaecb;
+  --accent-ink-long: #d6e1f2;
   --accent: var(--accent-focus);
   --accent-ink: var(--accent-ink-focus);
-  --primary: var(--ink);
-  --primary-ink: var(--bg);
-  --hover: color-mix(in srgb, var(--ink) 8%, transparent);
-  --progress-track: color-mix(in srgb, var(--ink) 12%, transparent);
-  --menu-shadow: 0 16px 40px rgb(0 0 0 / 55%), 0 2px 8px rgb(0 0 0 / 35%);
+  --primary: #f5f5f7;
+  --primary-ink: #1b1b1f;
+  --hover: rgba(245, 245, 247, 0.08);
+  --progress-track: rgba(245, 245, 247, 0.14);
+  --menu-shadow: 0 28px 55px rgba(0, 0, 0, 0.45), 0 2px 10px rgba(0, 0, 0, 0.32);
+  --shell-glow: radial-gradient(circle at top, rgba(39, 39, 45, 0.95), rgba(23, 23, 27, 0.82) 38%, rgba(12, 12, 15, 0.96) 100%);
 }
 
 .window-shell[data-session='focus'],
@@ -76,14 +80,14 @@
 html, body, #root { width: 100%; height: 100%; margin: 0; overflow: hidden; }
 html { background: var(--bg); }
 body {
-  background: var(--bg);
+  background: var(--shell-glow);
   color: var(--ink);
-  font: 12px/1.4 'Geist Variable', Geist, sans-serif;
+  font: 12px/1.4 -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Geist Variable', Geist, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color var(--base) var(--ease), color var(--base) var(--ease);
+  transition: background var(--base) var(--ease), color var(--base) var(--ease);
 }
 button {
   border: 0;
@@ -94,7 +98,7 @@ button {
   cursor: pointer;
 }
 button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3px; }
-::selection { background: var(--ink); color: var(--bg); }
+::selection { background: rgba(218, 122, 91, 0.28); color: var(--ink); }
 .sr-only {
   position: absolute;
   width: 1px;
@@ -114,11 +118,14 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   flex-direction: column;
   overflow: hidden;
   position: relative;
-  background: var(--bg);
+  background: var(--shell-glow);
   color: var(--ink);
   user-select: none;
-  transition: background-color var(--base) var(--ease), color var(--base) var(--ease);
+  transition: background var(--base) var(--ease), color var(--base) var(--ease);
 }
+
+/* Native macOS traffic lights share the draggable title-bar region. */
+.window-shell[data-platform='darwin'] .app-header { padding-left: 78px; }
 
 /* Header */
 
@@ -137,8 +144,8 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   gap: 7px;
   color: var(--ink);
   font-size: 11.5px;
-  font-weight: 550;
-  letter-spacing: 0.015em;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   line-height: 1;
 }
 .wordmark-mark { width: 17px; height: 12px; display: block; flex: none; }
@@ -150,12 +157,17 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   height: 28px;
   display: grid;
   place-items: center;
-  border-radius: 6px;
+  border-radius: 8px;
   color: var(--ink-2);
-  transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease);
+  border: 1px solid transparent;
+  transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease), border-color var(--fast) var(--ease), transform var(--fast) var(--ease);
 }
 .menu-trigger:hover,
-.menu-trigger[aria-expanded='true'] { background: var(--surface); color: var(--ink); }
+.menu-trigger[aria-expanded='true'] {
+  background: rgba(255, 255, 255, 0.38);
+  border-color: var(--line);
+  color: var(--ink);
+}
 .app-menu {
   position: absolute;
   top: 34px;
@@ -165,10 +177,12 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   padding: 5px;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 10px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 12px;
   box-shadow: var(--menu-shadow);
   transform-origin: top right;
-  animation: menu-in 120ms var(--ease);
+  animation: menu-in 180ms var(--ease);
 }
 .menu-item {
   width: 100%;
@@ -177,13 +191,13 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   align-items: center;
   gap: 8px;
   padding: 0 8px;
-  border-radius: 6px;
+  border-radius: 7px;
   color: var(--ink);
   font-size: 11.5px;
   text-align: left;
-  transition: background-color var(--fast) var(--ease);
+  transition: background-color var(--fast) var(--ease), transform var(--fast) var(--ease);
 }
-.menu-item:hover { background: var(--surface-2); }
+.menu-item:hover { background: var(--hover); }
 .menu-item:focus-visible { outline-offset: -1px; }
 .menu-check { width: 13px; height: 13px; flex: none; display: grid; place-items: center; color: var(--ink); }
 .menu-label { min-width: 0; }
@@ -213,13 +227,13 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   height: 100%;
   color: var(--ink-2);
   font-size: 11.5px;
-  font-weight: 450;
+  font-weight: 500;
   letter-spacing: 0.005em;
   white-space: nowrap;
   transition: color var(--fast) var(--ease);
 }
 .session-tab:hover { color: var(--ink); }
-.session-tab[aria-selected='true'] { color: var(--ink); font-weight: 550; }
+.session-tab[aria-selected='true'] { color: var(--ink); font-weight: 600; }
 .session-tab[aria-selected='true']::after {
   content: '';
   position: absolute;
@@ -227,10 +241,33 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   right: 0;
   bottom: -1px;
   height: 2px;
+  border-radius: 999px;
   background: var(--accent);
   transition: background-color var(--base) var(--ease);
 }
 .window-shell[data-status='running'] .session-tab { cursor: default; }
+
+.window-shell[data-platform='darwin'] .session-tabs {
+  height: 27px;
+  gap: 1px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+}
+.window-shell[data-platform='darwin'] .session-tab {
+  height: 21px;
+  padding: 0 5px;
+  border-radius: 5px;
+  font-size: 10px;
+  letter-spacing: 0;
+  transition: color var(--fast) var(--ease), background-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.window-shell[data-platform='darwin'] .session-tab[aria-selected='true'] {
+  background: var(--surface);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 12%);
+}
+.window-shell[data-platform='darwin'] .session-tab[aria-selected='true']::after { display: none; }
 
 .presets { display: flex; align-items: center; gap: 0; color: var(--ink-3); }
 .preset {
@@ -238,15 +275,18 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   min-height: 24px;
   display: grid;
   place-items: center;
-  border-radius: 4px;
+  border-radius: 6px;
   color: var(--ink-3);
   font-size: 10px;
   font-variant-numeric: tabular-nums;
-  transition: color var(--fast) var(--ease), background-color var(--fast) var(--ease);
+  transition: color var(--fast) var(--ease), background-color var(--fast) var(--ease), transform var(--fast) var(--ease);
 }
-.preset:hover:not(:disabled) { color: var(--ink); background: var(--hover); }
-.preset[aria-pressed='true'] { color: var(--ink); font-weight: 500; }
-.preset:disabled { opacity: 0.4; cursor: default; }
+.preset:hover:not(:disabled) {
+  color: var(--ink);
+  background: var(--hover);
+}
+.preset[aria-pressed='true'] { color: var(--ink); font-weight: 600; }
+.preset:disabled { opacity: 0.42; cursor: default; }
 .preset-unit { margin-left: 3px; color: var(--ink-3); font-size: 9.5px; }
 .session-length { color: var(--ink-3); font-size: 10px; font-variant-numeric: tabular-nums; }
 
@@ -264,7 +304,7 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   align-items: baseline;
   justify-content: center;
   color: var(--ink);
-  font: 300 76px/0.9 'Geist Variable', Geist, sans-serif;
+  font: 300 76px/0.9 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Geist Variable', Geist, sans-serif;
   letter-spacing: -0.045em;
   font-variant-numeric: tabular-nums;
   transition: opacity 160ms var(--ease);
@@ -307,7 +347,7 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   border-radius: 1px;
   background: var(--accent);
   transform-origin: left center;
-  transition: transform 0.9s linear, background-color var(--base) var(--ease);
+  transition: transform 300ms linear, background-color var(--base) var(--ease);
 }
 .session-message {
   min-height: 15px;
@@ -333,9 +373,14 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   place-items: center;
   border-radius: 50%;
   color: var(--ink-2);
-  transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease), transform var(--fast) var(--ease);
+  border: 1px solid transparent;
+  transition: background-color var(--fast) var(--ease), border-color var(--fast) var(--ease), color var(--fast) var(--ease), transform var(--fast) var(--ease);
 }
-.transport-button:hover { background: var(--hover); color: var(--ink); }
+.transport-button:hover {
+  background: var(--hover);
+  border-color: var(--line);
+  color: var(--ink);
+}
 .transport-button:active { transform: scale(0.94); }
 .transport-primary {
   width: 48px;
@@ -343,11 +388,15 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: var(--primary);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary) 96%, var(--bg)), var(--primary));
   color: var(--primary-ink);
-  transition: background-color var(--fast) var(--ease), transform var(--fast) var(--ease);
+  box-shadow: 0 10px 18px rgb(29 29 31 / 18%);
+  transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease), filter var(--fast) var(--ease);
 }
-.transport-primary:hover { background: color-mix(in srgb, var(--primary) 88%, var(--bg)); }
+.transport-primary:hover {
+  filter: brightness(1.02);
+  box-shadow: 0 12px 22px rgb(29 29 31 / 18%);
+}
 .transport-primary:active { transform: scale(0.95); }
 
 .app-summary {
@@ -389,7 +438,7 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   margin: 0;
   color: var(--ink);
   font-size: 15px;
-  font-weight: 550;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 .page-hint { color: var(--ink-3); font-size: 9.5px; }
@@ -431,13 +480,18 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   height: 24px;
   display: grid;
   place-items: center;
-  border-radius: 5px;
+  border-radius: 6px;
   color: var(--ink-2);
   font-size: 14px;
   line-height: 1;
-  transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease);
+  border: 1px solid transparent;
+  transition: background-color var(--fast) var(--ease), border-color var(--fast) var(--ease), color var(--fast) var(--ease);
 }
-.step-button:hover { background: var(--hover); color: var(--ink); }
+.step-button:hover {
+  background: var(--hover);
+  border-color: var(--line);
+  color: var(--ink);
+}
 .stepper output {
   display: inline-block;
   width: 27px;
@@ -452,9 +506,10 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   height: 20px;
   flex: none;
   position: relative;
-  border-radius: 10px;
-  background: var(--surface-2);
-  transition: background-color var(--base) var(--ease);
+  border-radius: 999px;
+  background: rgba(29, 29, 31, 0.1);
+  border: 1px solid rgba(29, 29, 31, 0.08);
+  transition: background-color var(--base) var(--ease), border-color var(--base) var(--ease);
 }
 .toggle::before { content: ''; position: absolute; inset: -2px; }
 .toggle::after {
@@ -462,13 +517,14 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   position: absolute;
   top: 3px;
   left: 3px;
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: var(--ink-3);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   transition: transform var(--base) var(--ease), background-color var(--base) var(--ease);
 }
-.toggle[aria-checked='true'] { background: var(--ink); }
+.toggle[aria-checked='true'] { background: var(--ink); border-color: transparent; }
 .toggle[aria-checked='true']::after { transform: translateX(14px); background: var(--bg); }
 
 .theme-options { display: flex; align-items: center; gap: 12px; }
@@ -483,14 +539,14 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
 }
 .theme-option::before {
   content: '';
-  width: 3px;
-  height: 3px;
+  width: 4px;
+  height: 4px;
   flex: none;
   border-radius: 50%;
   background: transparent;
 }
 .theme-option:hover { color: var(--ink); }
-.theme-option[aria-pressed='true'] { color: var(--ink); font-weight: 550; }
+.theme-option[aria-pressed='true'] { color: var(--ink); font-weight: 600; }
 .theme-option[aria-pressed='true']::before { background: var(--ink); }
 
 /* Statistics */
@@ -629,7 +685,7 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
   border-radius: 1px;
   background: var(--accent);
   transform-origin: left center;
-  transition: transform 0.5s linear, background-color var(--base) var(--ease);
+  transition: transform 300ms linear, background-color var(--base) var(--ease);
 }
 .mini-controls {
   flex: none;
@@ -674,17 +730,17 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
 }
 .digit { display: block; line-height: inherit; text-align: center; }
 .digit-out { position: absolute; top: 0.16em; left: 0; right: 0; }
-.roll-out { animation: roll-out 180ms cubic-bezier(0.4, 0, 1, 1) forwards; }
-.roll-in { animation: roll-in 180ms var(--ease); }
+.roll-out { animation: digit-roll-out 200ms cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+.roll-in { animation: digit-roll-in 260ms cubic-bezier(0.23, 1, 0.32, 1); }
 
-@keyframes roll-out {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-0.35em); opacity: 0; }
+@keyframes digit-roll-out {
+  to { transform: translateY(-0.18em); opacity: 0; }
 }
-@keyframes roll-in {
-  from { transform: translateY(0.35em); opacity: 0; }
+@keyframes digit-roll-in {
+  from { transform: translateY(0.18em); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
 @keyframes land {
   from { transform: translateY(4px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
@@ -700,5 +756,14 @@ button:focus-visible { outline: 1.5px solid var(--accent-ink); outline-offset: 3
     transition: none !important;
     scroll-behavior: auto !important;
   }
-  .roll-out { opacity: 0; }
+  .roll-out { animation: digit-fade-out 120ms ease-out forwards !important; }
+  .roll-in { animation: digit-fade-in 120ms ease-out !important; }
+}
+
+@keyframes digit-fade-out {
+  to { opacity: 0; }
+}
+@keyframes digit-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

@@ -17,9 +17,7 @@ describe('AnimatedDigit', () => {
     expect(container.querySelector('.digit-out')).toBeNull()
   })
 
-  // Regression: the wrapper used to collapse to zero width because every child
-  // was absolutely positioned, so all timer digits piled up on each other.
-  it('always keeps exactly one digit in flow', () => {
+  it('animates a changed countdown digit and removes its outgoing value', () => {
     const { container, rerender } = render(<AnimatedDigit value={1} />)
     expect(container.querySelectorAll('.digit-current')).toHaveLength(1)
 
@@ -27,8 +25,10 @@ describe('AnimatedDigit', () => {
     rerender(<AnimatedDigit value={2} />)
     expect(container.querySelector('.digit-out')?.textContent).toBe('1')
     expect(container.querySelector('.digit-current')?.textContent).toBe('2')
+    expect(container.querySelector('.digit-out')?.classList.contains('roll-out')).toBe(true)
+    expect(container.querySelector('.digit-current')?.classList.contains('roll-in')).toBe(true)
 
-    act(() => vi.advanceTimersByTime(200))
+    act(() => vi.advanceTimersByTime(260))
     expect(container.querySelector('.digit-out')).toBeNull()
     expect(container.querySelector('.digit-current')?.textContent).toBe('2')
   })

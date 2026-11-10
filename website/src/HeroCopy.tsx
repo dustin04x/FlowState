@@ -1,17 +1,10 @@
-import { useEffect, useState } from 'react'
-
 export function HeroCopy() {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => {
-    const timer = setTimeout(() => setMounted(true), 60)
-    return () => clearTimeout(timer)
-  }, [])
   return (
-    <div className={`hero-copy ${mounted ? 'revealed' : ''}`}>
-      <h1 id="hero-title" className={mounted ? 'revealed' : ''}>
+    <div className="hero-copy">
+      <h1 id="hero-title">
         One session.<br />One thing at a time.
       </h1>
-      <p className={mounted ? 'revealed' : ''}>
+      <p>
         FlowState is a small desktop timer for getting into work, taking a break, and coming back without the extra machinery.
       </p>
       <a

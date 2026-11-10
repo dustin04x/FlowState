@@ -9,7 +9,7 @@ export const resolveTheme = (choice: ThemeChoice, systemDark: boolean): Resolved
 export function applyTheme(theme: ResolvedTheme) {
   document.documentElement.dataset.theme = theme
   document.documentElement.style.colorScheme = theme
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#151513' : '#F2F0E9')
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#1B1B1F' : '#F5F5F7')
 }
 
 // Applied before React mounts so a dark window never flashes paper on launch.

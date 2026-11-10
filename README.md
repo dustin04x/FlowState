@@ -44,9 +44,13 @@ The Windows installer and macOS app are unsigned, so SmartScreen or Gatekeeper m
 
 Captures of the actual Windows app.
 
-| Focus | Break | Activity |
+| Focus · ready | Focus · running | Short break |
 |---|---|---|
-| <img src="./docs/assets/focus-idle.png" alt="FlowState focus timer ready to start" width="260"> | <img src="./docs/assets/break-mode.png" alt="FlowState short-break timer" width="260"> | <img src="./docs/assets/statistics.png" alt="FlowState activity and focus statistics" width="260"> |
+| <img src="./docs/assets/focus-idle.png" alt="FlowState focus timer ready to start a 25-minute session" width="240"> | <img src="./docs/assets/focus-running.png" alt="FlowState focus timer during a session" width="240"> | <img src="./docs/assets/break-mode.png" alt="FlowState short-break timer ready to start" width="240"> |
+| Settings · timer | Settings · appearance | Statistics |
+| <img src="./docs/assets/settings.png" alt="FlowState timer and behavior settings" width="240"> | <img src="./docs/assets/settings-appearance.png" alt="FlowState behavior toggles and appearance theme settings" width="240"> | <img src="./docs/assets/statistics.png" alt="FlowState focus totals, daily goal, streak, and weekly activity" width="240"> |
+| Mini-clock | | |
+| <img src="./docs/assets/mini-clock.png" alt="FlowState compact mini-clock window showing a running focus session" width="240"> | | |
 
 ## Run from source
 

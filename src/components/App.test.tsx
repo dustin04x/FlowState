@@ -66,7 +66,9 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup()
+  vi.useRealTimers()
   clearState()
+  flowStateMock.platform = 'win32'
   delete document.documentElement.dataset.theme
 })
 
@@ -75,6 +77,12 @@ afterEach(() => {
 const timeLabel = (minutes: number) => new RegExp(`${minutes} minutes 00 seconds`)
 
 describe('App timer screen', () => {
+  it('marks the renderer platform for native window styling', () => {
+    flowStateMock.platform = 'darwin'
+    render(<App />)
+    expect(document.querySelector('.window-shell')?.getAttribute('data-platform')).toBe('darwin')
+  })
+
   it('renders the focus timer ready to start a 25-minute session', () => {
     render(<App />)
     expect(screen.getByText('FlowState')).not.toBeNull()
@@ -106,6 +114,18 @@ describe('App timer screen', () => {
     expect(toggle.textContent).toBe('Pause')
     fireEvent.keyDown(window, { key: ' ', code: 'Space' })
     expect(toggle.textContent).toBe('Resume')
+  })
+
+  it('keeps the initial countdown display at 25:00 when starting between clock ticks', () => {
+    vi.useFakeTimers()
+    const startAt = new Date(2026, 10, 10, 12, 0).getTime()
+    vi.setSystemTime(startAt)
+    render(<App />)
+    vi.setSystemTime(startAt + 250)
+
+    fireEvent.click(screen.getByTitle('Start or pause · Space'))
+
+    expect(screen.getByLabelText(timeLabel(25))).not.toBeNull()
   })
 
   it('resets the timer with R', () => {

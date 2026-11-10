@@ -82,7 +82,17 @@ function App() {
     } catch { /* Sound is optional; the timer continues if audio is unavailable. */ }
   }, [settings.sound])
 
-  const start = useCallback(() => { setMessage(''); update((current) => ({ ...current, session: current.session.status === 'paused' ? resumeSession(current.session) : startSession(current.session) })) }, [update])
+  const start = useCallback(() => {
+    const startedAt = Date.now()
+    setNow(startedAt)
+    setMessage('')
+    update((current) => ({
+      ...current,
+      session: current.session.status === 'paused'
+        ? resumeSession(current.session, startedAt)
+        : startSession(current.session, startedAt),
+    }))
+  }, [update])
   const pause = useCallback(() => { setMessage(''); update((current) => ({ ...current, session: pauseSession(current.session) })) }, [update])
   const reset = useCallback(() => { setMessage(''); setCompletionCue(false); update((current) => ({ ...current, session: createSession(current.session.kind, kindDuration(current.session.kind, current.settings)) })) }, [update])
   const advance = useCallback((current: Saved, countFocus: boolean, date: string): Saved => {
@@ -209,7 +219,7 @@ function App() {
   const statusMessage = message || (session.status === 'running' ? session.kind === 'focus' ? 'Focusing' : `Take a ${breakLabel} break` : session.status === 'paused' ? session.kind === 'focus' ? 'Paused' : 'Break paused' : session.kind === 'focus' ? 'Ready to focus' : `Ready for a ${breakLabel} break`)
   const rootClass = `window-shell${completionCue ? ' is-complete' : ''}`
 
-  return <main className={rootClass} data-session={session.kind} data-status={session.status}>
+  return <main className={rootClass} data-platform={window.FlowState?.platform ?? 'web'} data-session={session.kind} data-status={session.status}>
     <AppHeader view={view} alwaysOnTop={settings.alwaysOnTop} miniWindowOpen={miniWindowOpen} onView={setView} onAlwaysOnTop={() => toggleSetting('alwaysOnTop')} onDetach={openMiniWindow} />
     {view === 'timer' && <TimerView kind={session.kind} status={session.status} focusDuration={sessionMinutes(session, settings.focus)} sessionLength={sessionLength} minutes={formatTime(remaining).slice(0, 2)} seconds={formatTime(remaining).slice(3)} progress={progress} dailySessions={dailySessions} sessionGoal={settings.dailyGoal} totalFocusMinutes={saved.totalMinutes} message={statusMessage} completionCue={completionCue} onSelectKind={selectKind} onPreset={selectPreset} onToggle={toggleTimer} onReset={reset} onSkip={skip} />}
     {view === 'settings' && <SettingsView settings={settings} supportsStartup={supportsStartup} onNumber={setDuration} onToggle={toggleSetting} onTheme={changeTheme} />}

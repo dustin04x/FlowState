@@ -112,7 +112,7 @@ function parseTimerState(value: unknown): TimerStateSnapshot | null {
     theme: candidate.theme === 'dark' ? 'dark' : 'light',
   }
 }
-const windowBackground = () => nativeTheme.shouldUseDarkColors ? '#151513' : '#F2F0E9'
+const windowBackground = () => nativeTheme.shouldUseDarkColors ? '#1B1B1F' : '#F5F5F7'
 function buildTrayMenu(): MenuItemConstructorOptions[] {
   const timerLabel = trayState.status === 'running' ? `Pause ${sessionName(trayState.kind).toLowerCase()}` : trayState.status === 'paused' ? 'Resume timer' : `Start ${sessionName(trayState.kind).toLowerCase()}`
   const goalLabel = trayState.completed >= trayState.goal
@@ -163,7 +163,9 @@ function createWindow() {
   const trayIconPath = path.join(__dirname, '../assets/flowstate-tray.png')
   const window = new BrowserWindow({
     ...bounds, width: 320, height: 420, minWidth: 320, maxWidth: 320, minHeight: 420, maxHeight: 420,
-    title: 'FlowState', icon: nativeImage.createFromPath(iconPath), frame: false, resizable: false, maximizable: false, fullscreenable: false, show: false, backgroundColor: windowBackground(),
+    title: 'FlowState', icon: nativeImage.createFromPath(iconPath), frame: process.platform === 'darwin', titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : undefined,
+    trafficLightPosition: process.platform === 'darwin' ? { x: 14, y: 14 } : undefined,
+    resizable: false, maximizable: false, fullscreenable: false, show: false, backgroundColor: windowBackground(),
     alwaysOnTop: saved.alwaysOnTop ?? false, autoHideMenuBar: true,
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false, sandbox: true, backgroundThrottling: false },
   })
