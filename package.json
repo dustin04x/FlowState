@@ -76,11 +76,14 @@
       "artifactName": "${productName}-${version}-${arch}.${ext}"
     },
     "nsis": {
-      "oneClick": true,
+      "oneClick": false,
       "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "FlowState"
+      "shortcutName": "FlowState",
+      "uninstallDisplayName": "FlowState",
+      "deleteAppDataOnUninstall": false
     }
   }
 }
