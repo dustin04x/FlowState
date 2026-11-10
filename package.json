@@ -60,7 +60,7 @@
       "target": "nsis",
       "icon": "assets/flowstate.ico",
       "artifactName": "${productName}-${version}-${arch}.${ext}",
-      "signAndEditExecutable": false
+      "signExecutable": false
     },
     "linux": {
       "target": [
