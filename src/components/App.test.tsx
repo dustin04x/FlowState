@@ -303,20 +303,37 @@ describe('timer display stability', () => {
     expect(screen.getByRole('img', { name: /percent complete/ }).getAttribute('aria-label')).toBe('Session 50 percent complete')
   })
 
+  it('does not discard a paused session when the focus setting changes', () => {
+    saveState({
+      settings: { ...defaultSettings, focus: 25 },
+      session: { kind: 'focus', status: 'paused', deadline: null, remainingMs: 10 * 60_000, durationMs: 25 * 60_000 },
+      completed: 0,
+      totalMinutes: 0,
+      history: [],
+    })
+    render(<App />)
+    expect(screen.getByLabelText(timeLabel(10))).not.toBeNull()
+    fireEvent.keyDown(window, { key: ',', ctrlKey: true })
+    fireEvent.click(screen.getByRole('button', { name: /Increase Focus duration/ }))
+    fireEvent.keyDown(window, { key: 'Escape' })
+    // The paused countdown survives; the new length applies to the next session.
+    expect(screen.getByLabelText(timeLabel(10))).not.toBeNull()
+  })
+
   it('records a completion on the day it finishes rather than the day the app launched', () => {
     vi.useFakeTimers()
     try {
       vi.setSystemTime(new Date(2026, 10, 8, 23, 59, 30))
       saveState({
         settings: { ...defaultSettings, focus: 25 },
-        session: { kind: 'focus', status: 'running', deadline: Date.now() + 5_000, remainingMs: 5_000, durationMs: 25 * 60_000 },
+        session: { kind: 'focus', status: 'running', deadline: Date.now() + 45_000, remainingMs: 45_000, durationMs: 25 * 60_000 },
         completed: 0,
         totalMinutes: 0,
         history: [],
       })
       render(<App />)
       act(() => {
-        vi.setSystemTime(new Date(2026, 10, 9, 0, 0, 1))
+        vi.setSystemTime(new Date(2026, 10, 9, 0, 0, 16))
         vi.advanceTimersByTime(1_000)
       })
       const stored = JSON.parse(localStorage.getItem(storageKey)!)

@@ -34,7 +34,7 @@ const loadSaved = (): Saved => {
     const validStatus = candidate && ['idle', 'running', 'paused'].includes(candidate.status)
     const session = validKind && validStatus && Number.isFinite(candidate.remainingMs) && (candidate.deadline === null || Number.isFinite(candidate.deadline))
       ? candidate : createSession('focus', settings.focus)
-    const history = Array.isArray(parsed.history) ? parsed.history.filter((item): item is DayStat => Boolean(item && /^\d{4}-\d{2}-\d{2}$/.test(item.date) && typeof item.sessions === 'number' && Number.isFinite(item.sessions) && item.sessions >= 0 && typeof item.minutes === 'number' && Number.isFinite(item.minutes) && item.minutes >= 0)) : []
+    const history = Array.isArray(parsed.history) ? parsed.history.filter((item): item is DayStat => Boolean(item && /^\d{4}-\d{2}-\d{2}$/.test(item.date) && typeof item.sessions === 'number' && Number.isFinite(item.sessions) && item.sessions >= 0 && typeof item.minutes === 'number' && Number.isFinite(item.minutes) && item.minutes >= 0)).slice(-400) : []
     return { settings, session, completed: bounded(parsed.completed, 0, 0, Number.MAX_SAFE_INTEGER), totalMinutes: bounded(parsed.totalMinutes, 0, 0, Number.MAX_SAFE_INTEGER), history }
   } catch { return createSaved() }
 }
@@ -106,7 +106,8 @@ function App() {
     if (session === finishedSessionRef.current) return
     const countedFocus = !skipped && session.kind === 'focus'
     const focusMinutes = countedFocus ? sessionMinutes(session, settings.focus) : 0
-    const completionDate = dayKey(new Date())
+    // Credit the moment the session actually ended, not when the app noticed.
+    const completionDate = dayKey(new Date(session.deadline ?? Date.now()))
     update((current) => advance(current, countedFocus, completionDate))
     finishedSessionRef.current = session
     if (!skipped) playSound(countedFocus ? 'completion' : 'break')
@@ -128,7 +129,7 @@ function App() {
   }
   const setDuration = (key: 'focus' | 'shortBreak' | 'longBreak' | 'interval' | 'dailyGoal', value: number) => update((current) => {
     const nextSettings = { ...current.settings, [key]: value }
-    const nextSession = key !== 'interval' && key !== 'dailyGoal' && current.session.kind === key && current.session.status !== 'running'
+    const nextSession = key !== 'interval' && key !== 'dailyGoal' && current.session.kind === key && current.session.status === 'idle'
       ? createSession(current.session.kind, kindDuration(current.session.kind, nextSettings)) : current.session
     return { ...current, settings: nextSettings, session: nextSession }
   })
@@ -146,8 +147,8 @@ function App() {
     update((current) => ({ ...current, settings: { ...current.settings, [key]: value } }))
     const applyNative = key === 'alwaysOnTop' ? window.FlowState?.setAlwaysOnTop(value) : key === 'launchOnStartup' ? window.FlowState?.setLaunchOnStartup(value) : undefined
     if (applyNative) void applyNative.then((success) => {
-      if (!success) update((current) => ({ ...current, settings: { ...current.settings, [key]: !value } }))
-    }).catch(() => update((current) => ({ ...current, settings: { ...current.settings, [key]: !value } })))
+      if (!success) update((current) => current.settings[key] === value ? { ...current, settings: { ...current.settings, [key]: !value } } : current)
+    }).catch(() => update((current) => current.settings[key] === value ? { ...current, settings: { ...current.settings, [key]: !value } } : current))
   }
   const toggleTimer = useCallback(() => session.status === 'running' ? pause() : start(), [pause, session.status, start])
   const skip = useCallback(() => finish(true), [finish])

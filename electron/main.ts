@@ -11,7 +11,7 @@ type TrayState = { kind: SessionKind; status: TimerStatus; remainingSeconds: num
 type ThemeChoice = 'system' | 'light' | 'dark'
 type TimerStateSnapshot = { kind: SessionKind; status: TimerStatus; remainingSeconds: number; durationSeconds: number; completed: number; goal: number; focusDuration: number; progress: number; theme: 'light' | 'dark' }
 type WindowSettings = { x?: number; y?: number; alwaysOnTop?: boolean; theme?: ThemeChoice }
-type MiniWindowSettings = { x?: number; y?: number; alwaysOnTop?: boolean }
+type MiniWindowSettings = { x?: number; y?: number; width?: number; height?: number; alwaysOnTop?: boolean }
 
 let mainWindow: BrowserWindow | null = null
 let miniWindow: BrowserWindow | null = null
@@ -163,7 +163,7 @@ function createWindow() {
   const trayIconPath = path.join(__dirname, '../assets/flowstate-tray.png')
   const window = new BrowserWindow({
     ...bounds, width: 320, height: 420, minWidth: 320, maxWidth: 320, minHeight: 420, maxHeight: 420,
-    title: 'FlowState', icon: nativeImage.createFromPath(iconPath), frame: false, resizable: false, show: false, backgroundColor: windowBackground(),
+    title: 'FlowState', icon: nativeImage.createFromPath(iconPath), frame: false, resizable: false, maximizable: false, fullscreenable: false, show: false, backgroundColor: windowBackground(),
     alwaysOnTop: saved.alwaysOnTop ?? false, autoHideMenuBar: true,
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false, sandbox: true, backgroundThrottling: false },
   })
@@ -200,11 +200,16 @@ function createMiniWindow() {
     return miniWindow
   }
   const saved = readMiniSettings()
-  const bounds = saved.x !== undefined && saved.y !== undefined ? { x: saved.x, y: saved.y } : { center: true }
+  const x = saved.x, y = saved.y
+  const width = saved.width !== undefined ? Math.max(240, Math.min(400, Math.round(saved.width))) : 280
+  const height = saved.height !== undefined ? Math.max(112, Math.min(200, Math.round(saved.height))) : 115
+  const visible = x !== undefined && y !== undefined && screen.getAllDisplays().some(({ workArea }) =>
+    x >= workArea.x - width && x < workArea.x + workArea.width && y >= workArea.y - height && y < workArea.y + workArea.height)
+  const bounds = visible ? { x, y } : { center: true }
   const iconPath = path.join(__dirname, '../assets/flowstate-mark.png')
   const window = new BrowserWindow({
-    ...bounds, width: 280, height: 115, minWidth: 240, maxWidth: 400, minHeight: 112, maxHeight: 200,
-    title: 'FlowState · Timer', icon: nativeImage.createFromPath(iconPath), frame: false, resizable: true, show: false,
+    ...bounds, width, height, minWidth: 240, maxWidth: 400, minHeight: 112, maxHeight: 200,
+    title: 'FlowState · Timer', icon: nativeImage.createFromPath(iconPath), frame: false, resizable: true, maximizable: false, fullscreenable: false, show: false,
     backgroundColor: windowBackground(), alwaysOnTop: readSettings().alwaysOnTop ?? false, autoHideMenuBar: true,
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false, sandbox: true },
   })
@@ -214,6 +219,7 @@ function createMiniWindow() {
     if (lastTimerSnapshot) window.webContents.send('timer:state', lastTimerSnapshot)
   })
   window.on('move', () => { if (!window.isDestroyed()) { const { x, y } = window.getBounds(); writeMiniSettings({ x, y }) } })
+  window.on('resize', () => { if (!window.isDestroyed()) { const { width: nextWidth, height: nextHeight } = window.getBounds(); writeMiniSettings({ width: nextWidth, height: nextHeight }) } })
   window.on('closed', () => {
     if (miniWindow === window) miniWindow = null
     if (mainWindow && !mainWindow.isDestroyed()) mainWindow.webContents.send('mini:closed')
@@ -231,6 +237,7 @@ function readMiniSettings(): MiniWindowSettings {
   const raw = readJson(miniSettingsPath)
   const settings: MiniWindowSettings = {}
   if (isFiniteNumber(raw.x) && isFiniteNumber(raw.y)) { settings.x = raw.x; settings.y = raw.y }
+  if (isFiniteNumber(raw.width) && isFiniteNumber(raw.height)) { settings.width = raw.width; settings.height = raw.height }
   if (typeof raw.alwaysOnTop === 'boolean') settings.alwaysOnTop = raw.alwaysOnTop
   return settings
 }
