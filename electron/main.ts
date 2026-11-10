@@ -154,7 +154,8 @@ function createWindow() {
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false, sandbox: true },
   })
   mainWindow = window
-  window.once('ready-to-show', () => window.show())
+  window.setIcon(nativeImage.createFromPath(iconPath))
+  window.once('ready-to-show', () => { window.setIcon(nativeImage.createFromPath(iconPath)); window.show() })
   window.on('move', () => { if (!window.isDestroyed()) { const { x, y } = window.getBounds(); writeSettings({ x, y }) } })
   window.on('close', (event) => {
     if (!isQuitting) { event.preventDefault(); hideWindow() }
