@@ -16,10 +16,10 @@ export function HeroCopy() {
       </p>
       <a
         className="primary-link"
-        href="https://github.com/dustin04x/FlowState/releases/download/v1.0.2/FlowState-1.0.2-x64.exe"
+        href="https://github.com/dustin04x/FlowState/releases/download/v1.1.0/FlowState-1.1.0-x64.exe"
       >
         Download for Windows
-        <span>v1.0.2 · unsigned</span>
+        <span>v1.1.0 · unsigned</span>
       </a>
       <p className="other-platforms">
         Also available for <a href="#downloads">macOS and Linux</a>.
