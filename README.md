@@ -30,6 +30,8 @@ Latest release: **[v1.1.0](https://github.com/dustin04x/FlowState/releases/tag/v
 
 The Windows installer and macOS app are unsigned, so SmartScreen or Gatekeeper may warn. Linux and macOS packages have not been verified on physical systems.
 
+[Code signing policy](./CODE_SIGNING.md) · [Privacy policy](./PRIVACY.md)
+
 ## Features
 
 - Focus presets of 25, 45, and 60 minutes, plus adjustable focus time.

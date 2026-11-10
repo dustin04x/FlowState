@@ -35,6 +35,12 @@ describe('FlowState website', () => {
     expect(site).toContain('not notarized')
   })
 
+  it('links the code signing and privacy policies', () => {
+    expect(site).toContain('Code signing policy')
+    expect(site).toContain('CODE_SIGNING.md')
+    expect(site).toContain('PRIVACY.md')
+  })
+
   it('gives actual app screenshots descriptive alternative text', () => {
     expect(site).toMatch(/src="\.\/assets\/focus-idle\.png" alt="[^"]+"/)
     expect(site).toMatch(/src="\.\/assets\/break-mode\.png" alt="[^"]+"/)

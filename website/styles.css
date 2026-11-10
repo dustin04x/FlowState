@@ -403,6 +403,12 @@ h2 {
   color: var(--ink);
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .footer-brand {
   font-weight: 620;
 }
